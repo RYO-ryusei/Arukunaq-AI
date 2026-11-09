@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arukunaq AI</title>
+  <style>
+    :root {
+      --fondo: #eef1f4;
+      --tinta: #1e2a3a;
+      --suave: #5b6878;
+      --linea: #d3dae2;
+      --blanco: #ffffff;
+      --magenta: #b3265c;
+      --turquesa: #1f8a8a;
+      --amarillo: #e5a823;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--fondo);
+      color: var(--tinta);
+      line-height: 1.5;
+    }
+
+    /* franja de colores tipo aguayo */
+    .franja {
+      height: 10px;
+      background: linear-gradient(90deg,
+        var(--magenta) 0 25%, var(--amarillo) 25% 40%,
+        var(--turquesa) 40% 70%, var(--magenta) 70% 85%, var(--amarillo) 85% 100%);
+    }
+
+    header {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .logo { font-family: Georgia, serif; font-size: 1.6rem; font-weight: bold; }
+    .logo span { color: var(--magenta); }
+
+    nav a {
+      color: var(--suave);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 0.95rem;
+    }
+    nav a:hover { color: var(--tinta); }
+
+    main { max-width: 960px; margin: 0 auto; padding: 0 16px 40px; }
+
+    .titulo { font-family: Georgia, serif; font-size: 2rem; margin-bottom: 4px; }
+    .subtitulo { color: var(--suave); margin-bottom: 24px; }
+
+    .traductor {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .panel {
+      background: var(--blanco);
+      border: 1px solid var(--linea);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel h2 { font-size: 1rem; margin-bottom: 10px; }
+
+    textarea, .salida {
+      width: 100%;
+      min-height: 200px;
+      border: 1px solid var(--linea);
+      border-radius: 6px;
+      padding: 12px;
+      font: inherit;
+      resize: vertical;
+    }
+
+    .salida { color: var(--suave); background: #f8fafb; }
+
+    .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+
+    .tab {
+      border: 1px solid var(--linea);
+      background: var(--blanco);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .tab.activo { background: var(--turquesa); border-color: var(--turquesa); color: white; }
+
+    .acciones { display: flex; gap: 8px; margin-top: 12px; align-items: center; }
+    .acciones .espacio { flex: 1; }
+    .contador { font-size: 0.85rem; color: var(--suave); }
+
+    .btn {
+      border: 1px solid var(--linea);
+      background: var(--blanco);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font: inherit;
+      cursor: pointer;
+    }
+    .btn.principal { background: var(--magenta); border-color: var(--magenta); color: white; font-weight: 600; }
+
+    .btn:focus-visible, .tab:focus-visible, textarea:focus-visible, nav a:focus-visible {
+      outline: 3px solid var(--amarillo);
+      outline-offset: 2px;
+    }
+
+    .recientes { margin-top: 28px; }
+    .recientes h2 { font-size: 1.1rem; margin-bottom: 10px; }
+
+    .recientes ul { list-style: none; background: var(--blanco); border: 1px solid var(--linea); border-radius: 8px; }
+    .recientes li {
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      border-bottom: 1px solid var(--linea);
+      font-size: 0.95rem;
+    }
+    .recientes li:last-child { border-bottom: none; }
+    .recientes small { display: block; color: var(--suave); font-size: 0.8rem; }
+
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 16px 30px;
+      color: var(--suave);
+      font-size: 0.9rem;
+    }
+    footer a { color: var(--turquesa); }
+
+    @media (max-width: 700px) {
+      .traductor { grid-template-columns: 1fr; }
+      .recientes li { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="franja"></div>
+
+  <header>
+    <div class="logo">Arukunaq <span>AI</span></div>
+    <nav>
+      <a href="#">Traductor</a>
+      <a href="#">Diccionario</a>
+      <a href="#">Acerca de</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="titulo">Traductor de español a quechua y aimara</h1>
+    <p class="subtitulo">Escribe una frase en español y elige el idioma de destino.</p>
+
+    <section class="traductor">
+      <div class="panel">
+        <h2>Español</h2>
+        <textarea placeholder="Escribe aquí el texto a traducir..."></textarea>
+        <div class="acciones">
+          <span class="contador">0 / 500</span>
+          <span class="espacio"></span>
+          <button type="button" class="btn">Limpiar</button>
+          <button type="button" class="btn principal">Traducir</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Traducción</h2>
+        <div class="tabs">
+          <button type="button" class="tab activo">Quechua</button>
+          <button type="button" class="tab">Aimara</button>
+        </div>
+        <div class="salida">La traducción aparecerá aquí.</div>
+        <div class="acciones">
+          <span class="espacio"></span>
+          <button type="button" class="btn">Copiar</button>
+          <button type="button" class="btn">Escuchar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="recientes">
+      <h2>Traducciones recientes</h2>
+      <ul>
+        <li>
+          <div><small>Español</small>Buenos días</div>
+          <div><small>Quechua</small>Allin p'unchay</div>
+          <div><small>Aimara</small>Aski urukipan</div>
+        </li>
+        <li>
+          <div><small>Español</small>Gracias</div>
+          <div><small>Quechua</small>Sulpayki</div>
+          <div><small>Aimara</small>Yuspagara</div>
+        </li>
+        <li>
+          <div><small>Español</small>¿Cómo te llamas?</div>
+          <div><small>Quechua</small>¿Imataq sutiyki?</div>
+          <div><small>Aimara</small>¿Kunasa sutimaxa?</div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Proyecto en <a href="https://github.com/RYO-ryusei/Arukunaq-AI">GitHub</a>. Esta es solo la interfaz, aún no traduce.
+  </footer>
+</body>
+</html>
